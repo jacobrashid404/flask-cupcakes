@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from models import db, dbx, Cupcake
 
 app = Flask(__name__)
@@ -14,6 +14,10 @@ db.init_app(app)
 
 app.config['SECRET_KEY'] = "I'LL NEVER TELL!!"
 
+
+@app.get("/")
+def show_homepage():
+    return render_template("homepage.html")
 
 @app.get("/api/cupcakes")
 def show_all_cupcakes():
