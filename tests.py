@@ -127,3 +127,47 @@ class CupcakeViewsTestCase(TestCase):
 
             q = db.select(Cupcake)
             self.assertEqual(len(dbx(q).scalars().all()), 2)
+
+    def test_update_cupcake(self):
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake_id}"
+            # TODO: ask how will we get a specific cupcake?
+
+            # current_cupcake_rating = CUPCAKE_DATA_2.rating TODO: ask why doesn't this work?
+            # current_cupcake_image_url = CUPCAKE_DATA_2.image_url
+
+            CUPCAKE_DATA_UPDATED = {
+                "flavor": "strawberry",
+                "size": "medium"
+            }
+
+            resp = client.patch(url, json=CUPCAKE_DATA_UPDATED)
+
+            cupcake_id = resp.json['cupcake']['id']
+
+            self.assertIsInstance(cupcake_id, int)
+
+            self.assertEqual(resp.json, {
+                "cupcake": {
+                    "id": cupcake_id,
+                    "flavor": "strawberry",
+                    "size": "medium",
+                    "rating": 5,
+                    "image_url":  "http://test.com/cupcake.jpg"
+                }
+            })
+
+    def test_delete_cupcake(self):
+
+        q = db.select(Cupcake)
+        self.assertEqual(len(dbx(q).scalars().all()), 1)
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake_id}"
+
+        resp = client.delete(url)
+
+        self.assertEqual(resp.status_code, 200)
+
+        q = db.select(Cupcake)
+        self.assertEqual(len(dbx(q).scalars().all()), 0)

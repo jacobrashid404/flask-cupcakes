@@ -32,7 +32,7 @@ def show_all_cupcakes():
 def show_single_cupcake(cupcake_id):
     """Show a single cupcake given its id.
     Returns JSON {'cupcake':{id, flavor, size, rating, image_url}}
-    """ 
+    """
 
     cupcake = db.get_or_404(Cupcake, cupcake_id)
     serialized = cupcake.serialize()
@@ -74,20 +74,20 @@ def update_cupcake(cupcake_id):
     """Update a cupcake using its ID
     Returns JSON {'cupcake':{id, flavor, size, rating, image_url}}
     """
-    
+
     cupcake = db.get_or_404(Cupcake, cupcake_id)
     cupcake_data = request.json
-    
+
     # check if each key value has been changed
     # if it's changed, update the cupcake data
     for key in cupcake_data:
-        if(key):
+        if (key):
             setattr(cupcake, key, cupcake_data[key])
-    
+
     db.session.commit()
     serialized = cupcake.serialize()
-    
-    return(jsonify(cupcake=serialized), 201)
+
+    return (jsonify(cupcake=serialized), 201)
 
 
 @app.delete("/api/cupcakes/<int:cupcake_id>")
@@ -95,10 +95,10 @@ def delete_cupcake(cupcake_id):
     """Deletes a cupcake using its id
     Return JSON {'deleted': cupcake_id}
     """
-    
+
     cupcake = db.get_or_404(Cupcake, cupcake_id)
-    
+
     db.session.delete(cupcake)
     db.session.commit()
-    
+
     return ({"deleted": cupcake_id}, 200)
