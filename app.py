@@ -72,22 +72,24 @@ def create_single_cupcake():
 @app.patch("/api/cupcakes/<int:cupcake_id>")
 def update_cupcake(cupcake_id):
     """Update a cupcake using its ID
+    Accepts JSON {'flavor', 'size', 'rating', 'image_url'}
+    keys excluded from the request will not be changed 
     Returns JSON {'cupcake':{id, flavor, size, rating, image_url}}
-    """
+    """ 
 
     cupcake = db.get_or_404(Cupcake, cupcake_id)
     cupcake_data = request.json
 
-    # check if each key value has been changed
-    # if it's changed, update the cupcake data
+    # check if key is passed and can be changed
+    # change data accordingly
     for key in cupcake_data:
-        if (key):
+        if key in ["flavor", "size", "rating", "image_url"]:
             setattr(cupcake, key, cupcake_data[key])
 
     db.session.commit()
     serialized = cupcake.serialize()
 
-    return (jsonify(cupcake=serialized), 201)
+    return (jsonify(cupcake=serialized), 200)
 
 
 @app.delete("/api/cupcakes/<int:cupcake_id>")
@@ -101,4 +103,5 @@ def delete_cupcake(cupcake_id):
     db.session.delete(cupcake)
     db.session.commit()
 
-    return ({"deleted": cupcake_id}, 200)
+    return ({"deleted": cupcake_id}, 200) #FIXME: jsonify response
+#NOTE: dont need to include 200, its default 
