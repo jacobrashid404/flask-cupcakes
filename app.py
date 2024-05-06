@@ -79,7 +79,7 @@ def update_cupcake(cupcake_id):
     cupcake_data = request.json
     
     # check if each key value has been changed
-    # if it has, update the cupcake data
+    # if it's changed, update the cupcake data
     for key in cupcake_data:
         if(key):
             setattr(cupcake, key, cupcake_data[key])
@@ -87,7 +87,7 @@ def update_cupcake(cupcake_id):
     db.session.commit()
     serialized = cupcake.serialize()
     
-    return(jsonify(cupcake=serialized), 200)
+    return(jsonify(cupcake=serialized), 201)
 
 
 @app.delete("/api/cupcakes/<int:cupcake_id>")
