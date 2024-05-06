@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 dbx = db.session.execute
 
+DEFAULT_CUPCAKE_URL = "https://tinyurl.com/demo-cupcake"
 
 class Cupcake(db.Model):
     """Cupcake model"""
@@ -34,8 +35,7 @@ class Cupcake(db.Model):
 
     image_url = db.mapped_column(
         db.String(500),
-        # FIXME: we want to make this a global var (for urls) for reusaibility and imports
-        default="https://tinyurl.com/demo-cupcake",
+        default=DEFAULT_CUPCAKE_URL,
         nullable=False
     )
 
