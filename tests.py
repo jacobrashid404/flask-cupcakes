@@ -153,7 +153,7 @@ class CupcakeViewsTestCase(TestCase):
                     "flavor": "strawberry",
                     "size": "medium",
                     "rating": 5,
-                    "image_url":  "http://test.com/cupcake.jpg"
+                    "image_url": "http://test.com/cupcake.jpg"
                 }
             })
 
