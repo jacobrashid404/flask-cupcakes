@@ -17,7 +17,8 @@ app.config['SECRET_KEY'] = "I'LL NEVER TELL!!"
 
 @app.get("/")
 def show_homepage():
-    return render_template("homepage.html")
+    return render_template("index.html")
+
 
 @app.get("/api/cupcakes")
 def show_all_cupcakes():
@@ -77,9 +78,9 @@ def create_single_cupcake():
 def update_cupcake(cupcake_id):
     """Update a cupcake using its ID
     Accepts JSON {'flavor', 'size', 'rating', 'image_url'}
-    keys excluded from the request will not be changed 
+    keys excluded from the request will not be changed
     Returns JSON {'cupcake':{id, flavor, size, rating, image_url}}
-    """ 
+    """
 
     cupcake = db.get_or_404(Cupcake, cupcake_id)
     cupcake_data = request.json
@@ -107,5 +108,5 @@ def delete_cupcake(cupcake_id):
     db.session.delete(cupcake)
     db.session.commit()
 
-    return ({"deleted": cupcake_id}, 200) #FIXME: jsonify response
-#NOTE: dont need to include 200, its default 
+    return ({"deleted": cupcake_id}, 200)  # FIXME: jsonify response
+# NOTE: dont need to include 200, its default

@@ -5,7 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 dbx = db.session.execute
 
-DEFAULT_CUPCAKE_URL = "https://tinyurl.com/demo-cupcake"
+DEFAULT_CUPCAKE_URL = "https://t3.ftcdn.net/jpg/01/14/82/00/360_F_114820057_FX8SItpczGKwcCOVz7UbSUxuNMMYVqKa.jpg"
+
 
 class Cupcake(db.Model):
     """Cupcake model"""
